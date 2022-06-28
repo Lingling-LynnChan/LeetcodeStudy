@@ -1,5 +1,8 @@
 /*
 https://leetcode.com/problems/roman-to-integer/submissions/
+思路:
+从大到小扫描,列举特殊情况,利用下标指针扫描字符串
+利用异常机制保证结果正确性
 */
 class Solution {
 	public int romanToInt(String s) {
@@ -13,7 +16,7 @@ class Solution {
 	private int tool() {
 		char ch;
 		try {
-			ch = chars[index];
+			ch = chars[index];//如果抛出异常,说明指针越界,捕获异常并结束扫描
 		} catch (Exception e) {
 			return 0;
 		}
@@ -29,12 +32,12 @@ class Solution {
 				} else if (next == 'D') {
 					tch = 400;
 				}else{
-					index--;
+					index--;//如果运行到此,说明非特殊情况,回退指针
 				}
 			} catch (Exception ignored) {
 			} finally {
 				if (tch == 0) {
-					tch = 100;
+					tch = 100;//在此赋值,防止异常导致的无法获取结果
 				}
 			}
 		} else if (ch == 'D') {
